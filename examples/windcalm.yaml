@@ -22,7 +22,13 @@ packages:
           fan_id: bedroom_fan
           fan_name: Bedroom Fan
           remote_id: "0x12345"  # Sample only: replace with your paired remote's ID.
-      # Add another packages/fan.yaml entry with different vars for each fan.
+      # Optional second fan: remove this entire entry if you only have one fan.
+      - path: packages/fan.yaml
+        vars:
+          fan_id: living_room_fan
+          fan_name: Living Room Fan
+          remote_id: "0x6789A"  # Sample only: replace with your paired remote's ID.
+      # Add more entries with unique fan_id and remote_id values as needed.
 
 wifi:
   ssid: !secret wifi_ssid
