@@ -25,38 +25,30 @@ Default wiring (3.3 V supply and common ground):
 
 ## Install through ESPHome Desktop
 
-1. Launch the app and select **Open Config Folder** from its tray menu.
-2. Save [`examples/packages-git.yaml`](examples/packages-git.yaml) there as
-   `windcalm.yaml`. ESPHome downloads the component and packages directly from
+1. Download [`windcalm.yaml`](https://raw.githubusercontent.com/tducret/create-windcalm-fan/main/examples/windcalm.yaml).
+2. In the app, select **Create device → Advanced set up options → Import from file**
+   and choose `windcalm.yaml`. ESPHome downloads the component and packages directly from
    **`tducret/create-windcalm-fan`**; no source files need copying.
 3. Edit the fan's `fan_name`, `fan_id`, and `remote_id`. The supplied ID is a
    synthetic sample—replace it with your own remote's ID (see below).
-4. Add these values to `secrets.yaml` in the same folder, preserving any existing
-   entries:
-
-   ```yaml
-   wifi_ssid: "Your Wi-Fi"
-   wifi_password: "Your Wi-Fi password"
-   windcalm_api_key: "Your base64-encoded 32-byte key"
-   ```
-
-   Generate the API key with `openssl rand -base64 32` or use the key generated
-   by Device Builder for this device.
-5. Refresh the dashboard, **Validate**, then **Install** over USB. Subsequent
+4. Review the Wi-Fi and API settings after import. You can modify them in the
+   device YAML or edit the referenced `wifi_ssid`, `wifi_password`, and
+   `windcalm_api_key` values in `secrets.yaml` as needed.
+5. **Validate**, then **Install** over USB. Subsequent
    installs can use Wi-Fi (OTA).
 6. In Home Assistant, open **Settings → Devices & services** and configure the
    discovered ESPHome device with the same API key. Fans and buttons appear
    automatically.
 
-The example pins packages and component code to `v0.1.0`, which must be published
-first. To update, change `windcalm_version` to an available release and reinstall.
+The template pins packages and component code to `v0.1.0`. To update, change
+`windcalm_version` to an available release and reinstall.
 
 ### Find your remote ID
 
-Temporarily add `logger: {level: DEBUG}` to your device YAML and install it with
-the sample ID. Open **Logs** and press a button on your paired remote. Copy the
+The template enables `logger: {level: DEBUG}` by default. Install it with the
+sample ID, open **Logs**, and press a button on your paired remote. Copy the
 hexadecimal ID from `Unconfigured remote ID=...` into `remote_id`, prefixed with
-`0x`. Restore INFO logging and reinstall.
+`0x`, then reinstall. You can switch logging to INFO afterward for quieter logs.
 
 ### Customize
 

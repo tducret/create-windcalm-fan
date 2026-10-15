@@ -1,5 +1,5 @@
-# Requires the repository and release tag to be published first.
-# Copy this file into the desktop app's config folder; dependencies are fetched.
+# Import through Create device > Advanced set up options > Import from file.
+# The component and packages are downloaded from GitHub automatically.
 substitutions:
   windcalm_repository: tducret/create-windcalm-fan
   windcalm_version: v0.1.0
@@ -8,6 +8,8 @@ substitutions:
 esphome:
   name: windcalm-controller
   friendly_name: Windcalm Controller
+
+logger: {level: DEBUG}
 
 packages:
   windcalm:
