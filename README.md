@@ -36,9 +36,6 @@ Default wiring (3.3 V supply and common ground):
    `windcalm_api_key` values in `secrets.yaml` as needed.
 5. **Validate**, then **Install** over USB. Subsequent
    installs can use Wi-Fi (OTA).
-6. In Home Assistant, open **Settings → Devices & services** and configure the
-   discovered ESPHome device with the same API key. Fans and buttons appear
-   automatically.
 
 The template pins packages and component code to `v0.1.0`. To update, change
 `windcalm_version` to an available release and reinstall.
@@ -62,6 +59,13 @@ hexadecimal ID from `Unconfigured remote ID=...` into `remote_id`, prefixed with
 RF commands have no acknowledgement, so displayed state is an estimate. Timer
 expiry is not detected; use the **Mark On/Off** buttons to correct power state.
 Firmware builds pass; hardware and live Home Assistant testing remain pending.
+
+## Connect to Home Assistant
+
+After installing ESPHome, open **Settings → Devices & services** and configure
+the discovered controller. If it isn't discovered, select **Add integration →
+ESPHome** and enter its IP address. Use the same API encryption key; fan controls
+and command buttons appear automatically.
 
 ## Development
 
