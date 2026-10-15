@@ -1,0 +1,55 @@
+# One instance per controller. Credentials belong in the user's device YAML.
+substitutions:
+  windcalm_component_source: github://tducret/create-windcalm-fan@v0.1.0
+  windcalm_clk_pin: GPIO11
+  windcalm_miso_pin: GPIO9
+  windcalm_mosi_pin: GPIO10
+  windcalm_cs_pin: GPIO12
+  windcalm_tx_pin: GPIO13
+  windcalm_rx_pin: GPIO8
+
+esphome:
+  min_version: 2026.9.1
+
+external_components:
+  - source: ${windcalm_component_source}
+    components: [windcalm]
+
+spi:
+  id: windcalm_spi
+  clk_pin: ${windcalm_clk_pin}
+  miso_pin: ${windcalm_miso_pin}
+  mosi_pin: ${windcalm_mosi_pin}
+
+cc1101:
+  id: windcalm_radio
+  spi_id: windcalm_spi
+  cs_pin: ${windcalm_cs_pin}
+  frequency: 433.92MHz
+  modulation_type: ASK/OOK
+  output_power: 0
+
+remote_transmitter:
+  id: windcalm_tx
+  pin: ${windcalm_tx_pin}
+  carrier_duty_percent: 100%
+  non_blocking: true
+  on_transmit:
+    - cc1101.begin_tx: windcalm_radio
+  on_complete:
+    - cc1101.begin_rx: windcalm_radio
+
+remote_receiver:
+  id: windcalm_rx
+  pin:
+    number: ${windcalm_rx_pin}
+    mode: INPUT
+  dump: []
+  filter: 50us
+  idle: 5ms
+  buffer_size: 20kb
+
+windcalm:
+  id: windcalm_hub
+  transmitter_id: windcalm_tx
+  receiver_id: windcalm_rx

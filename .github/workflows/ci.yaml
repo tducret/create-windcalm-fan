@@ -1,0 +1,25 @@
+name: Check
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m venv .venv
+      - run: .venv/bin/pip install esphome==2026.9.1
+      - name: Create validation-only secrets
+        run: |
+          cat > examples/secrets.yaml <<EOF
+          wifi_ssid: test-network
+          wifi_password: test-password
+          windcalm_api_key: "$(openssl rand -base64 32)"
+          EOF
+      - run: make test
+      - run: make config
+      - run: make compile

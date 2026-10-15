@@ -1,0 +1,71 @@
+# Include once per fan with unique fan_id, fan_name, and remote_id variables.
+# No default remote ID: each user must supply their own paired remote's ID.
+defaults:
+  hub_id: windcalm_hub
+  speed_turns_on: "true"
+
+fan:
+  - platform: windcalm
+    id: ${fan_id}
+    name: ${fan_name}
+    windcalm_id: ${hub_id}
+    remote_id: ${remote_id}
+    speed_turns_on: ${speed_turns_on}
+
+button:
+  - platform: windcalm
+    id: ${fan_id}_power_toggle
+    name: ${fan_name} Power Toggle
+    fan_id: ${fan_id}
+    command: POWER_TOGGLE
+  - platform: windcalm
+    id: ${fan_id}_rotation_toggle
+    name: ${fan_name} Rotation Toggle
+    fan_id: ${fan_id}
+    command: ROTATION_TOGGLE
+  - platform: windcalm
+    id: ${fan_id}_light_toggle
+    name: ${fan_name} Light Toggle
+    fan_id: ${fan_id}
+    command: LIGHT_TOGGLE
+  - platform: windcalm
+    id: ${fan_id}_light_temperature
+    name: ${fan_name} Light Temperature
+    fan_id: ${fan_id}
+    command: LIGHT_TEMPERATURE
+  - platform: windcalm
+    id: ${fan_id}_timer_1h
+    name: ${fan_name} Timer 1h
+    fan_id: ${fan_id}
+    command: TIMER_1H
+  - platform: windcalm
+    id: ${fan_id}_timer_2h
+    name: ${fan_name} Timer 2h
+    fan_id: ${fan_id}
+    command: TIMER_2H
+  - platform: windcalm
+    id: ${fan_id}_timer_4h
+    name: ${fan_name} Timer 4h
+    fan_id: ${fan_id}
+    command: TIMER_4H
+  - platform: windcalm
+    id: ${fan_id}_disable_sound
+    name: ${fan_name} Disable Sound
+    fan_id: ${fan_id}
+    command: DISABLE_SOUND
+  - platform: template
+    id: ${fan_id}_mark_off
+    name: ${fan_name} Mark Off
+    entity_category: config
+    on_press:
+      - windcalm.sync_state:
+          id: ${fan_id}
+          state: false
+  - platform: template
+    id: ${fan_id}_mark_on
+    name: ${fan_name} Mark On
+    entity_category: config
+    on_press:
+      - windcalm.sync_state:
+          id: ${fan_id}
+          state: true

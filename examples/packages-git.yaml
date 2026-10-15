@@ -1,0 +1,34 @@
+# Requires the repository and release tag to be published first.
+# Copy this file into the desktop app's config folder; dependencies are fetched.
+substitutions:
+  windcalm_repository: tducret/create-windcalm-fan
+  windcalm_version: v0.1.0
+  windcalm_component_source: github://${windcalm_repository}@${windcalm_version}
+
+esphome:
+  name: windcalm-controller
+  friendly_name: Windcalm Controller
+
+packages:
+  windcalm:
+    url: https://github.com/${windcalm_repository}
+    ref: ${windcalm_version}
+    files:
+      - packages/controller-esp32-s3.yaml
+      - path: packages/fan.yaml
+        vars:
+          fan_id: bedroom_fan
+          fan_name: Bedroom Fan
+          remote_id: "0x12345"  # Sample only: replace with your paired remote's ID.
+      # Add another packages/fan.yaml entry with different vars for each fan.
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: !secret windcalm_api_key
+
+ota:
+  - platform: esphome

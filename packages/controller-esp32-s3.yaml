@@ -1,0 +1,14 @@
+# Board-specific wrapper. Use radio-cc1101.yaml directly for another board.
+packages:
+  windcalm_radio_package: !include radio-cc1101.yaml
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  framework:
+    type: esp-idf
+
+logger:
+  level: INFO
+  hardware_uart: USB_CDC
+  tx_buffer_size: 2048

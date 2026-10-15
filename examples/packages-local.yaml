@@ -1,0 +1,34 @@
+# Works from this checkout; also suitable for the desktop app's config folder.
+substitutions:
+  windcalm_component_source: ../components
+
+esphome:
+  name: windcalm-packages
+  friendly_name: Windcalm Controller
+
+packages:
+  controller: !include ../packages/controller-esp32-s3.yaml
+  bedroom: !include
+    file: ../packages/fan.yaml
+    vars:
+      fan_id: bedroom_fan
+      fan_name: Bedroom Fan
+      remote_id: "0x12345"  # Sample only: replace with your paired remote's ID.
+  living_room: !include
+    file: ../packages/fan.yaml
+    vars:
+      fan_id: living_room_fan
+      fan_name: Living Room Fan
+      remote_id: "0x6789A"  # Sample only: replace with your paired remote's ID.
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  output_power: 8.5dB
+
+api:
+  encryption:
+    key: !secret windcalm_api_key
+
+ota:
+  - platform: esphome
